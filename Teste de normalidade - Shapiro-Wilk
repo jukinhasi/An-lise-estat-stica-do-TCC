@@ -1,0 +1,20 @@
+PT BR 
+# Carregar o pacote necessário
+library(dplyr)  # Importa a biblioteca 'dplyr' para manipulação de dados de forma eficiente.
+
+# Ler a planilha CSV
+# Substitua o caminho do arquivo pelo local onde você salvou a planilha
+dados <- read.csv("C:\\Users\\julin\\Downloads\\dados_projeto_ficticios.csv")  
+# Lê o arquivo CSV no caminho especificado e armazena os dados em um objeto chamado 'dados'.
+
+# Realizar o teste de Shapiro-Wilk em todas as colunas numéricas
+resultados_shapiro <- dados %>%  # Começa uma série de operações com o dataframe 'dados'
+    select_if(is.numeric) %>%    # Seleciona apenas as colunas que contêm valores numéricos
+    summarise_all(~ shapiro.test(.)$p.value)  # Aplica o teste de Shapiro-Wilk a cada coluna numérica e extrai apenas o valor-p de cada teste.
+
+# Exibir os resultados
+print("Resultados do Teste de Shapiro-Wilk:")  # Exibe uma mensagem no console para indicar os resultados do teste.
+print(resultados_shapiro)  # Exibe o dataframe 'resultados_shapiro', que contém os valores-p de cada coluna numérica.
+
+# Interpretação: se o valor-p < 0.05, rejeitamos a hipótese de normalidade.
+# Observação: Esta linha é um comentário que lembra que valores-p abaixo de 0.05 indicam que a coluna não segue uma distribuição normal.
